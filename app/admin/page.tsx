@@ -54,6 +54,7 @@ export default function AdminPage() {
     js_code: "",
     preview_image_url: "",
     github_url: "",
+    public_url: "",
   })
 
   useEffect(() => {
@@ -124,6 +125,7 @@ export default function AdminPage() {
       js_code: snippet.js_code,
       preview_image_url: snippet.preview_image_url,
       github_url: snippet.github_url || "",
+      public_url: snippet.public_url || "",
     })
   }
 
@@ -139,6 +141,7 @@ export default function AdminPage() {
       js_code: "",
       preview_image_url: "",
       github_url: "",
+      public_url: "",
     })
   }
 
@@ -304,6 +307,16 @@ export default function AdminPage() {
                         value={formData.github_url}
                         onChange={(e) => setFormData((prev) => ({ ...prev, github_url: e.target.value }))}
                         placeholder="https://github.com/..."
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="public_url">公開URL（任意）</Label>
+                      <Input
+                        id="public_url"
+                        value={formData.public_url}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, public_url: e.target.value }))}
+                        placeholder="https://example.com/..."
                       />
                     </div>
                   </div>

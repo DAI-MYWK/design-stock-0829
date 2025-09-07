@@ -97,6 +97,15 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
                       </a>
                     </Button>
                   )}
+
+                  {snippet.public_url && (
+                    <Button variant="outline" size="sm" className="w-full bg-transparent" asChild>
+                      <a href={snippet.public_url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        デモサイトを見る
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>

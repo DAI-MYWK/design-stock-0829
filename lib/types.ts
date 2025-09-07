@@ -9,6 +9,7 @@ export interface Snippet {
   js_code?: string
   preview_image_url?: string
   github_url?: string
+  public_url?: string
   created_at: string
   updated_at: string
 }
