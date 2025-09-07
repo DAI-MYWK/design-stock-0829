@@ -122,4 +122,18 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* プレースホルダーのスタイルを薄いカラーに設定 */
+  input::placeholder,
+  textarea::placeholder {
+    color: oklch(0.708 0 0 / 0.5); /* 薄いグレー */
+    opacity: 1;
+  }
+  
+  /* ダークモード用のプレースホルダー */
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: oklch(0.708 0 0 / 0.4); /* ダークモード用薄いグレー */
+    opacity: 1;
+  }
 }
