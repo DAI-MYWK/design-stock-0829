@@ -9,12 +9,15 @@ export interface Snippet {
   js_code?: string
   preview_image_url?: string
   github_url?: string
+  gist_url?: string
+  memo?: string
   public_url?: string
   created_at: string
   updated_at: string
 }
 
 export const SECTIONS = [
+  "ヘッダー",
   "ヒーローセクション",
   "会社概要",
   "サービス紹介",
@@ -23,6 +26,7 @@ export const SECTIONS = [
   "お客様の声",
   "よくある質問",
   "お問い合わせ",
+  "フッター",
 ] as const
 
 export type Section = (typeof SECTIONS)[number]

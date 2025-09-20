@@ -16,6 +16,7 @@ import { Plus, Edit, Trash2, X, ArrowLeft } from "lucide-react"
 import type { Snippet } from "@/lib/types"
 
 const SECTIONS = [
+  "ヘッダー",
   "ヒーローセクション",
   "会社概要セクション",
   "サービス紹介セクション",
@@ -24,6 +25,7 @@ const SECTIONS = [
   "お客様の声セクション",
   "よくある質問セクション",
   "お問い合わせセクション",
+  "フッター",
 ]
 
 const COMMON_TAGS = [
@@ -54,6 +56,8 @@ export default function AdminPage() {
     js_code: "",
     preview_image_url: "",
     github_url: "",
+    gist_url: "",
+    memo: "",
     public_url: "",
   })
 
@@ -125,6 +129,8 @@ export default function AdminPage() {
       js_code: snippet.js_code,
       preview_image_url: snippet.preview_image_url,
       github_url: snippet.github_url || "",
+      gist_url: snippet.gist_url || "",
+      memo: snippet.memo || "",
       public_url: snippet.public_url || "",
     })
   }
@@ -141,6 +147,8 @@ export default function AdminPage() {
       js_code: "",
       preview_image_url: "",
       github_url: "",
+      gist_url: "",
+      memo: "",
       public_url: "",
     })
   }
@@ -311,12 +319,34 @@ export default function AdminPage() {
                     </div>
 
                     <div className="space-y-2">
+                      <Label htmlFor="gist">GistのURL（任意）</Label>
+                      <Input
+                        id="gist"
+                        value={formData.gist_url}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, gist_url: e.target.value }))}
+                        placeholder="https://gist.github.com/..."
+                      />
+                    </div>
+
+                    <div className="space-y-2">
                       <Label htmlFor="public_url">公開URL（任意）</Label>
                       <Input
                         id="public_url"
                         value={formData.public_url}
                         onChange={(e) => setFormData((prev) => ({ ...prev, public_url: e.target.value }))}
                         placeholder="https://example.com/..."
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="memo">メモ欄（任意）</Label>
+                      <Textarea
+                        id="memo"
+                        value={formData.memo}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, memo: e.target.value }))}
+                        placeholder="補足情報やメモを入力..."
+                        className="min-h-[80px]"
+                        rows={3}
                       />
                     </div>
                   </div>
@@ -394,7 +424,6 @@ export default function AdminPage() {
                         onChange={(e) => setFormData((prev) => ({ ...prev, html_code: e.target.value }))}
                         placeholder="HTMLコードを貼り付け..."
                         className="min-h-[200px] font-mono text-sm"
-                        required
                       />
                     </div>
 
@@ -406,7 +435,6 @@ export default function AdminPage() {
                         onChange={(e) => setFormData((prev) => ({ ...prev, css_code: e.target.value }))}
                         placeholder="CSSコードを貼り付け..."
                         className="min-h-[200px] font-mono text-sm"
-                        required
                       />
                     </div>
 

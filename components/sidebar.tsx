@@ -2,17 +2,20 @@
 
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { Home, Zap, DollarSign, Briefcase, FileText, Users, HelpCircle, Mail, ChevronRight } from "lucide-react"
+import { Home, Zap, DollarSign, Briefcase, FileText, Users, HelpCircle, Mail, ChevronRight, Menu, MoreHorizontal, Award } from "lucide-react"
 
 const sections = [
   { id: "all", name: "すべて", icon: Home },
+  { id: "ヘッダー", name: "ヘッダー", icon: Menu },
   { id: "ヒーローセクション", name: "ヒーローセクション", icon: Zap },
-  { id: "会社概要セクション", name: "会社概要", icon: Briefcase },
-  { id: "サービス紹介セクション", name: "サービス紹介", icon: FileText },
-  { id: "料金・価格セクション", name: "料金・価格", icon: DollarSign },
-  { id: "お客様の声セクション", name: "お客様の声", icon: Users },
-  { id: "よくある質問セクション", name: "よくある質問", icon: HelpCircle },
-  { id: "お問い合わせセクション", name: "お問い合わせ", icon: Mail },
+  { id: "会社概要セクション", name: "会社概要セクション", icon: Briefcase },
+  { id: "サービス紹介セクション", name: "サービス紹介セクション", icon: FileText },
+  { id: "料金・価格セクション", name: "料金・価格セクション", icon: DollarSign },
+  { id: "事例セクション", name: "事例セクション", icon: Award },
+  { id: "お客様の声セクション", name: "お客様の声セクション", icon: Users },
+  { id: "よくある質問セクション", name: "よくある質問セクション", icon: HelpCircle },
+  { id: "お問い合わせセクション", name: "お問い合わせセクション", icon: Mail },
+  { id: "フッター", name: "フッター", icon: MoreHorizontal },
 ]
 
 interface SidebarProps {
