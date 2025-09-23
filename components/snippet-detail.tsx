@@ -98,6 +98,15 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
                     </Button>
                   )}
 
+                  {snippet.gist_url && (
+                    <Button variant="outline" size="sm" className="w-full bg-transparent" asChild>
+                      <a href={snippet.gist_url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Gist で見る
+                      </a>
+                    </Button>
+                  )}
+
                   {snippet.public_url && (
                     <Button variant="outline" size="sm" className="w-full bg-transparent" asChild>
                       <a href={snippet.public_url} target="_blank" rel="noopener noreferrer">
@@ -105,6 +114,15 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
                         デモサイトを見る
                       </a>
                     </Button>
+                  )}
+
+                  {snippet.memo && (
+                    <div className="space-y-2">
+                      <div className="text-sm font-medium text-muted-foreground">メモ</div>
+                      <div className="text-sm bg-muted/50 p-3 rounded-lg whitespace-pre-wrap">
+                        {snippet.memo}
+                      </div>
+                    </div>
                   )}
                 </div>
               </CardContent>
