@@ -4,15 +4,16 @@ import { SnippetDetail } from "@/components/snippet-detail"
 import { NextRequest } from "next/server"
 
 interface SnippetPageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function SnippetPage({ params }: SnippetPageProps) {
   try {
-    console.log("[v0] Fetching snippet with ID:", params.id)
+    const { id } = await params
+    console.log("[v0] Fetching snippet with ID:", id)
 
-    const mockRequest = new NextRequest(`http://localhost:3000/api/snippets/${params.id}`)
-    const response = await GET(mockRequest, { params: { id: params.id } })
+    const mockRequest = new NextRequest(`http://localhost:3000/api/snippets/${id}`)
+    const response = await GET(mockRequest, { params: { id } })
 
     console.log("[v0] Response status:", response.status)
 

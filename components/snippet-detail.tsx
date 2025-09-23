@@ -47,7 +47,7 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Preview and Info */}
+          {/* Left: Preview and Info */}
           <div className="lg:col-span-1">
             <Card>
               <CardHeader>
@@ -88,54 +88,143 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
                       </Badge>
                     ))}
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-                  {snippet.github_url && (
-                    <Button variant="outline" size="sm" className="w-full bg-transparent" asChild>
-                      <a href={snippet.github_url} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        GitHub で見る
+          {/* Right: URLs and Memo */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">リンク・詳細情報</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* GitHub URL */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <div className="text-base font-bold text-foreground">GitHub URL</div>
+                    {snippet.github_url && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => copyToClipboard(snippet.github_url!, "GitHub URL")}
+                        className="h-6 px-2 text-xs"
+                      >
+                        <Copy className="h-3 w-3 mr-1" />
+                        {copiedType === "GitHub URL" ? "コピー済み" : "コピー"}
+                      </Button>
+                    )}
+                  </div>
+                  {snippet.github_url ? (
+                    <div className="text-sm bg-muted/50 p-3 rounded-lg">
+                      <a 
+                        href={snippet.github_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 underline break-all"
+                      >
+                        {snippet.github_url}
                       </a>
-                    </Button>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">GitHub URLが登録されていません</p>
                   )}
+                </div>
 
-                  {snippet.gist_url && (
-                    <Button variant="outline" size="sm" className="w-full bg-transparent" asChild>
-                      <a href={snippet.gist_url} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Gist で見る
+                {/* Gist URL */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <div className="text-base font-bold text-foreground">Gistのコマンド</div>
+                    {snippet.gist_url && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => copyToClipboard(snippet.gist_url!, "Gistのコマンド")}
+                        className="h-6 px-2 text-xs"
+                      >
+                        <Copy className="h-3 w-3 mr-1" />
+                        {copiedType === "Gistのコマンド" ? "コピー済み" : "コピー"}
+                      </Button>
+                    )}
+                  </div>
+                  {snippet.gist_url ? (
+                    <div className="text-sm bg-muted/50 p-3 rounded-lg">
+                      <a 
+                        href={snippet.gist_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 underline break-all"
+                      >
+                        {snippet.gist_url}
                       </a>
-                    </Button>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Gistのコマンドが登録されていません</p>
                   )}
+                </div>
 
-                  {snippet.public_url && (
+                {/* Public URL */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <div className="text-base font-bold text-foreground">公開URL</div>
+                    {snippet.public_url && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => copyToClipboard(snippet.public_url!, "公開URL")}
+                        className="h-6 px-2 text-xs"
+                      >
+                        <Copy className="h-3 w-3 mr-1" />
+                        {copiedType === "公開URL" ? "コピー済み" : "コピー"}
+                      </Button>
+                    )}
+                  </div>
+                  {snippet.public_url ? (
                     <Button variant="outline" size="sm" className="w-full bg-transparent" asChild>
                       <a href={snippet.public_url} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="h-4 w-4 mr-2" />
                         デモサイトを見る
                       </a>
                     </Button>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">公開URLが登録されていません</p>
                   )}
+                </div>
 
-                  {snippet.memo && (
-                    <div className="space-y-2">
-                      <div className="text-sm font-medium text-muted-foreground">メモ</div>
-                      <div className="text-sm bg-muted/50 p-3 rounded-lg whitespace-pre-wrap">
-                        {snippet.memo}
-                      </div>
-                    </div>
-                  )}
+                {/* Memo */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <div className="text-base font-bold text-foreground">メモ欄</div>
+                    {snippet.memo && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => copyToClipboard(snippet.memo!, "メモ欄")}
+                        className="h-6 px-2 text-xs"
+                      >
+                        <Copy className="h-3 w-3 mr-1" />
+                        {copiedType === "メモ欄" ? "コピー済み" : "コピー"}
+                      </Button>
+                    )}
+                  </div>
+                  <div className="text-sm bg-muted/50 p-3 rounded-lg whitespace-pre-wrap">
+                    {snippet.memo || "メモが登録されていません"}
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
+        </div>
 
-          {/* Code Sections */}
-          <div className="lg:col-span-2 space-y-6">
+        {/* Bottom: Code Sections (3 columns) */}
+        <div className="mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* HTML */}
-            {snippet.html_code && (
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-base">HTML</CardTitle>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-base">HTML</CardTitle>
+                {snippet.html_code && (
                   <div className="flex gap-2">
                     <Button size="sm" variant="outline" onClick={() => copyToClipboard(snippet.html_code!, "HTML")}>
                       <Copy className="h-3 w-3 mr-1" />
@@ -150,20 +239,24 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
                       ダウンロード
                     </Button>
                   </div>
-                </CardHeader>
-                <CardContent>
+                )}
+              </CardHeader>
+              <CardContent>
+                {snippet.html_code ? (
                   <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{snippet.html_code}</code>
                   </pre>
-                </CardContent>
-              </Card>
-            )}
+                ) : (
+                  <p className="text-muted-foreground text-sm">HTMLコードが登録されていません</p>
+                )}
+              </CardContent>
+            </Card>
 
             {/* CSS */}
-            {snippet.css_code && (
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-base">CSS</CardTitle>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-base">CSS</CardTitle>
+                {snippet.css_code && (
                   <div className="flex gap-2">
                     <Button size="sm" variant="outline" onClick={() => copyToClipboard(snippet.css_code!, "CSS")}>
                       <Copy className="h-3 w-3 mr-1" />
@@ -178,20 +271,24 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
                       ダウンロード
                     </Button>
                   </div>
-                </CardHeader>
-                <CardContent>
+                )}
+              </CardHeader>
+              <CardContent>
+                {snippet.css_code ? (
                   <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{snippet.css_code}</code>
                   </pre>
-                </CardContent>
-              </Card>
-            )}
+                ) : (
+                  <p className="text-muted-foreground text-sm">CSSコードが登録されていません</p>
+                )}
+              </CardContent>
+            </Card>
 
             {/* JavaScript */}
-            {snippet.js_code && (
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-base">JavaScript</CardTitle>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-base">JavaScript</CardTitle>
+                {snippet.js_code && (
                   <div className="flex gap-2">
                     <Button size="sm" variant="outline" onClick={() => copyToClipboard(snippet.js_code!, "JavaScript")}>
                       <Copy className="h-3 w-3 mr-1" />
@@ -206,14 +303,18 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
                       ダウンロード
                     </Button>
                   </div>
-                </CardHeader>
-                <CardContent>
+                )}
+              </CardHeader>
+              <CardContent>
+                {snippet.js_code ? (
                   <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
                     <code>{snippet.js_code}</code>
                   </pre>
-                </CardContent>
-              </Card>
-            )}
+                ) : (
+                  <p className="text-muted-foreground text-sm">JavaScriptコードが登録されていません</p>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    console.log("[v0] Starting GET request for single snippet:", params.id)
+    const { id } = await params
+    console.log("[v0] Starting GET request for single snippet:", id)
 
     const supabaseUrl = process.env.SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -12,7 +13,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: "サーバー設定エラーです" }, { status: 500 })
     }
 
-    const url = `${supabaseUrl}/rest/v1/snippets?id=eq.${params.id}&select=*`
+    const url = `${supabaseUrl}/rest/v1/snippets?id=eq.${id}&select=*`
 
     console.log("[v0] Making request to:", url)
 
@@ -46,9 +47,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    console.log("[v0] Starting PUT request for snippet:", params.id)
+    const { id } = await params
+    console.log("[v0] Starting PUT request for snippet:", id)
 
     const supabaseUrl = process.env.SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -61,7 +63,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const body = await request.json()
     console.log("[v0] Request body received:", Object.keys(body))
 
-    const url = `${supabaseUrl}/rest/v1/snippets?id=eq.${params.id}`
+    const url = `${supabaseUrl}/rest/v1/snippets?id=eq.${id}`
 
     const response = await fetch(url, {
       method: "PATCH",
@@ -90,9 +92,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    console.log("[v0] Starting DELETE request for snippet:", params.id)
+    const { id } = await params
+    console.log("[v0] Starting DELETE request for snippet:", id)
 
     const supabaseUrl = process.env.SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -102,7 +105,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: "サーバー設定エラーです" }, { status: 500 })
     }
 
-    const url = `${supabaseUrl}/rest/v1/snippets?id=eq.${params.id}`
+    const url = `${supabaseUrl}/rest/v1/snippets?id=eq.${id}`
 
     const response = await fetch(url, {
       method: "DELETE",
