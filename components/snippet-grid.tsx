@@ -16,6 +16,7 @@ export function SnippetGrid({ selectedCategory }: SnippetGridProps) {
   const [snippets, setSnippets] = useState<Snippet[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
   const filteredSnippets = useMemo(() => {
     console.log("[v0] Filtering snippets:", { selectedCategory, totalSnippets: snippets.length })
@@ -59,6 +60,29 @@ export function SnippetGrid({ selectedCategory }: SnippetGridProps) {
     } catch (err) {
       console.error("Failed to copy:", err)
     }
+  }
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }
+
+  const handleCopySelected = async () => {
+    if (selectedIds.size === 0) return
+    const selectedSnippets = snippets.filter((s) => selectedIds.has(s.id) && s.gist_url)
+    if (selectedSnippets.length === 0) return
+    const uniqueUrls = Array.from(new Set(selectedSnippets.map((s) => s.gist_url!.trim())))
+    const joined = uniqueUrls
+      .map((url) => `npx shadcn@latest add ${url}`)
+      .join(" && ")
+    await copyToClipboard(joined, "複数Gistのコマンド")
   }
 
   if (loading) {
@@ -109,7 +133,10 @@ export function SnippetGrid({ selectedCategory }: SnippetGridProps) {
     <div className="p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredSnippets.map((snippet) => (
-          <Card key={snippet.id} className="group hover:shadow-lg transition-all duration-200 hover:scale-[1.02]">
+          <Card
+            key={snippet.id}
+            className={`group hover:shadow-lg transition-all duration-200 hover:scale-[1.02] ${selectedIds.has(snippet.id) ? "ring-2 ring-red-500" : ""}`}
+          >
             <CardHeader className="p-0">
               <Link href={`/snippet/${snippet.id}`}>
                 <div className="aspect-video bg-muted rounded-t-lg overflow-hidden cursor-pointer">
@@ -154,13 +181,30 @@ export function SnippetGrid({ selectedCategory }: SnippetGridProps) {
               </div>
             </CardContent>
 
-            <CardFooter className="p-4 pt-0 flex gap-2">
-              <Link href={`/snippet/${snippet.id}`} className="flex-1">
+            <CardFooter className="p-4 pt-0 flex flex-col gap-2">
+              <Link href={`/snippet/${snippet.id}`} className="w-full">
                 <Button size="sm" variant="outline" className="w-full gap-2 bg-transparent">
                   <Copy className="h-3 w-3" />
                   詳細・コピー
                 </Button>
               </Link>
+              {snippet.gist_url && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full gap-2 bg-transparent select-none"
+                  onClick={async () => {
+                    // 選択状態もトグル
+                    toggleSelect(snippet.id)
+                    // 個別のコマンドを即コピー
+                    const cmd = `npx shadcn@latest add ${snippet.gist_url!.trim()}`
+                    await copyToClipboard(cmd, "Gistのコマンド")
+                  }}
+                >
+                  <Copy className="h-3 w-3" />
+                  コマンドをコピー
+                </Button>
+              )}
               {snippet.github_url && (
                 <Button size="sm" variant="ghost" className="px-2" asChild>
                   <a href={snippet.github_url} target="_blank" rel="noopener noreferrer">
@@ -172,6 +216,29 @@ export function SnippetGrid({ selectedCategory }: SnippetGridProps) {
           </Card>
         ))}
       </div>
+
+      {/* 固定の一括コピーアクション */}
+      {selectedIds.size > 0 && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[min(640px,90vw)]">
+          <div className="bg-background border border-border shadow-lg rounded-lg p-3 flex items-center gap-3">
+            <div className="text-sm text-muted-foreground flex-1">
+              選択中: {selectedIds.size} 件
+            </div>
+            <Button size="sm" variant="default" onClick={handleCopySelected} className="gap-2">
+              <Copy className="h-4 w-4" />
+              選択コマンドをコピー
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setSelectedIds(new Set())}
+              className="gap-2"
+            >
+              クリア
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
