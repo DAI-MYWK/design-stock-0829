@@ -34,11 +34,18 @@ const COMMON_TAGS = [
   "アニメーション",
   "レスポンシブ",
   "モーダル",
-  "フォーム",
-  "カルーセル",
   "パララックス",
-  "グラデーション",
   "アイコン",
+]
+
+const ATMOSPHERE_TAGS = [
+  "シンプル",
+  "カッコいい",
+  "可愛い",
+  "やわらかい",
+  "ポップ",
+  "上品",
+  "和風",
 ]
 
 export default function AdminPage() {
@@ -362,6 +369,18 @@ export default function AdminPage() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {COMMON_TAGS.filter((tag) => !formData.tags.includes(tag)).map((tag) => (
+                        <Button key={tag} type="button" variant="outline" size="sm" onClick={() => addTag(tag)}>
+                          + {tag}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 雰囲気タグ（任意） */}
+                  <div className="space-y-2">
+                    <Label>雰囲気タグ（任意）</Label>
+                    <div className="flex flex-wrap gap-2">
+                      {ATMOSPHERE_TAGS.filter((tag) => !formData.tags.includes(tag)).map((tag) => (
                         <Button key={tag} type="button" variant="outline" size="sm" onClick={() => addTag(tag)}>
                           + {tag}
                         </Button>
