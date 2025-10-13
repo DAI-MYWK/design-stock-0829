@@ -51,8 +51,6 @@ export default function AdminPage() {
     section: "",
     company_name: "",
     tags: [] as string[],
-    html_code: "",
-    css_code: "",
     js_code: "",
     preview_image_url: "",
     github_url: "",
@@ -124,10 +122,8 @@ export default function AdminPage() {
       section: snippet.section,
       company_name: snippet.company_name,
       tags: snippet.tags,
-      html_code: snippet.html_code,
-      css_code: snippet.css_code,
-      js_code: snippet.js_code,
-      preview_image_url: snippet.preview_image_url,
+      js_code: snippet.js_code || "",
+      preview_image_url: snippet.preview_image_url || "",
       github_url: snippet.github_url || "",
       gist_url: snippet.gist_url || "",
       memo: snippet.memo || "",
@@ -142,8 +138,6 @@ export default function AdminPage() {
       section: "",
       company_name: "",
       tags: [],
-      html_code: "",
-      css_code: "",
       js_code: "",
       preview_image_url: "",
       github_url: "",
@@ -273,6 +267,7 @@ export default function AdminPage() {
                         value={formData.title}
                         onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                         placeholder="例: モダンなヒーローセクション"
+                        className="placeholder:text-gray-400"
                         required
                       />
                     </div>
@@ -284,8 +279,8 @@ export default function AdminPage() {
                         onValueChange={(value) => setFormData((prev) => ({ ...prev, section: value }))}
                         required
                       >
-                        <SelectTrigger>
-                          <SelectValue placeholder="セクションを選択" />
+                        <SelectTrigger className="placeholder:text-gray-400">
+                          <SelectValue placeholder="セクションを選択" className="placeholder:text-gray-400" />
                         </SelectTrigger>
                         <SelectContent>
                           {SECTIONS.map((section) => (
@@ -304,6 +299,7 @@ export default function AdminPage() {
                         value={formData.company_name}
                         onChange={(e) => setFormData((prev) => ({ ...prev, company_name: e.target.value }))}
                         placeholder="例: 株式会社サンプル"
+                        className="placeholder:text-gray-400"
                         required
                       />
                     </div>
@@ -315,6 +311,7 @@ export default function AdminPage() {
                         value={formData.github_url}
                         onChange={(e) => setFormData((prev) => ({ ...prev, github_url: e.target.value }))}
                         placeholder="https://github.com/..."
+                        className="placeholder:text-gray-400"
                       />
                     </div>
 
@@ -325,6 +322,7 @@ export default function AdminPage() {
                         value={formData.gist_url}
                         onChange={(e) => setFormData((prev) => ({ ...prev, gist_url: e.target.value }))}
                         placeholder="https://gist.github.com/..."
+                        className="placeholder:text-gray-400"
                       />
                     </div>
 
@@ -335,6 +333,7 @@ export default function AdminPage() {
                         value={formData.public_url}
                         onChange={(e) => setFormData((prev) => ({ ...prev, public_url: e.target.value }))}
                         placeholder="https://example.com/..."
+                        className="placeholder:text-gray-400"
                       />
                     </div>
 
@@ -345,7 +344,7 @@ export default function AdminPage() {
                         value={formData.memo}
                         onChange={(e) => setFormData((prev) => ({ ...prev, memo: e.target.value }))}
                         placeholder="補足情報やメモを入力..."
-                        className="min-h-[80px]"
+                        className="min-h-[80px] placeholder:text-gray-400"
                         rows={3}
                       />
                     </div>
@@ -400,7 +399,7 @@ export default function AdminPage() {
                         value={formData.preview_image_url.startsWith("data:") ? "" : formData.preview_image_url}
                         onChange={(e) => setFormData((prev) => ({ ...prev, preview_image_url: e.target.value }))}
                         placeholder="画像URLを直接入力"
-                        className="flex-1"
+                        className="flex-1 placeholder:text-gray-400"
                       />
 
                       {formData.preview_image_url && (
@@ -415,39 +414,15 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="html">HTMLコード</Label>
-                      <Textarea
-                        id="html"
-                        value={formData.html_code}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, html_code: e.target.value }))}
-                        placeholder="HTMLコードを貼り付け..."
-                        className="min-h-[200px] font-mono text-sm"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="css">CSSコード</Label>
-                      <Textarea
-                        id="css"
-                        value={formData.css_code}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, css_code: e.target.value }))}
-                        placeholder="CSSコードを貼り付け..."
-                        className="min-h-[200px] font-mono text-sm"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="js">JavaScriptコード</Label>
-                      <Textarea
-                        id="js"
-                        value={formData.js_code}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, js_code: e.target.value }))}
-                        placeholder="JavaScriptコードを貼り付け..."
-                        className="min-h-[200px] font-mono text-sm"
-                      />
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="js">TypeScriptコード</Label>
+                    <Textarea
+                      id="js"
+                      value={formData.js_code}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, js_code: e.target.value }))}
+                      placeholder="TypeScript/TSXコードを貼り付け..."
+                      className="min-h-[400px] font-mono text-sm placeholder:text-gray-400"
+                    />
                   </div>
 
                   <div className="flex gap-4">

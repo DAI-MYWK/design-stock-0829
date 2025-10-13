@@ -4,9 +4,7 @@ export interface Snippet {
   section: string
   company_name: string
   tags: string[]
-  html_code?: string
-  css_code?: string
-  js_code?: string
+  js_code?: string  // TypeScript/TSX code
   preview_image_url?: string
   github_url?: string
   gist_url?: string

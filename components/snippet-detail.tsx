@@ -217,105 +217,38 @@ export function SnippetDetail({ snippet }: SnippetDetailProps) {
           </div>
         </div>
 
-        {/* Bottom: Code Sections (3 columns) */}
+        {/* Bottom: TypeScript Code Section */}
         <div className="mt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* HTML */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-base">HTML</CardTitle>
-                {snippet.html_code && (
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => copyToClipboard(snippet.html_code!, "HTML")}>
-                      <Copy className="h-3 w-3 mr-1" />
-                      {copiedType === "HTML" ? "コピー済み" : "コピー"}
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => downloadFile(snippet.html_code!, `${snippet.title}-html.html`)}
-                    >
-                      <Download className="h-3 w-3 mr-1" />
-                      ダウンロード
-                    </Button>
-                  </div>
-                )}
-              </CardHeader>
-              <CardContent>
-                {snippet.html_code ? (
-                  <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{snippet.html_code}</code>
-                  </pre>
-                ) : (
-                  <p className="text-muted-foreground text-sm">HTMLコードが登録されていません</p>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* CSS */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-base">CSS</CardTitle>
-                {snippet.css_code && (
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => copyToClipboard(snippet.css_code!, "CSS")}>
-                      <Copy className="h-3 w-3 mr-1" />
-                      {copiedType === "CSS" ? "コピー済み" : "コピー"}
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => downloadFile(snippet.css_code!, `${snippet.title}-styles.css`)}
-                    >
-                      <Download className="h-3 w-3 mr-1" />
-                      ダウンロード
-                    </Button>
-                  </div>
-                )}
-              </CardHeader>
-              <CardContent>
-                {snippet.css_code ? (
-                  <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{snippet.css_code}</code>
-                  </pre>
-                ) : (
-                  <p className="text-muted-foreground text-sm">CSSコードが登録されていません</p>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* JavaScript */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-base">JavaScript</CardTitle>
-                {snippet.js_code && (
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => copyToClipboard(snippet.js_code!, "JavaScript")}>
-                      <Copy className="h-3 w-3 mr-1" />
-                      {copiedType === "JavaScript" ? "コピー済み" : "コピー"}
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => downloadFile(snippet.js_code!, `${snippet.title}-script.js`)}
-                    >
-                      <Download className="h-3 w-3 mr-1" />
-                      ダウンロード
-                    </Button>
-                  </div>
-                )}
-              </CardHeader>
-              <CardContent>
-                {snippet.js_code ? (
-                  <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-                    <code>{snippet.js_code}</code>
-                  </pre>
-                ) : (
-                  <p className="text-muted-foreground text-sm">JavaScriptコードが登録されていません</p>
-                )}
-              </CardContent>
-            </Card>
-          </div>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-lg">TypeScript Code</CardTitle>
+              {snippet.js_code && (
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" onClick={() => copyToClipboard(snippet.js_code!, "TypeScript")}>
+                    <Copy className="h-3 w-3 mr-1" />
+                    {copiedType === "TypeScript" ? "コピー済み" : "コピー"}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => downloadFile(snippet.js_code!, `${snippet.title}.tsx`)}
+                  >
+                    <Download className="h-3 w-3 mr-1" />
+                    ダウンロード
+                  </Button>
+                </div>
+              )}
+            </CardHeader>
+            <CardContent>
+              {snippet.js_code ? (
+                <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
+                  <code>{snippet.js_code}</code>
+                </pre>
+              ) : (
+                <p className="text-muted-foreground text-sm">TypeScriptコードが登録されていません</p>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
